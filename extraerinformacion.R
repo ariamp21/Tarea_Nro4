@@ -1,5 +1,5 @@
 #Instalando libreria r vest
-install.packages("rvest")
+#install.packages("rvest")
 library('rvest')
 #funciones que no estan descargadas, llamamos a library para que aparezcan
 
@@ -130,3 +130,47 @@ tabla1$Jumbo <- gsub(",",".",tabla1$Jumbo)
 
 #Combinando dos tablas 
 #tablaMerge <- rbind(tabla1,tabla2)
+
+##Graficarrrrrrrr
+#TablaMerge %>% (Trabajaremos con lo que esta sucediendo arriba)
+#ggplot () + (grafico)
+#aes (x= Supermercado, y= Santa Isabel)
+
+####GRAFICO 1 DE BARRAS: 
+## geom_bar(stat="identity")
+
+###GRAFICO 2 al reves
+## coord_flip()
+
+###########################
+#####GRAFOOOOOOOOOO########
+###########################
+
+
+###FERIA CHILENA DEL LIBRO: https://www.feriachilenadellibro
+
+paginaChilenaDelLibro <- "https://www.feriachilenadellibro.cl/"
+
+#guardo la pagina con read_html
+paginaChilenaRead <- read_html(paginaChilenaDelLibro)
+
+paginaChilenaNodesReferencias <- html_nodes(paginaChilenaRead, ".product-item-photo")
+
+#saca info contenida dentro de un atributo (los tag tienen atributos) las clases, href
+#cualquier cosa contenida dentro del < > del tag
+html_attr(paginaChilenaNodesReferencias, "href")
+
+links <- html_attr(paginaChilenaNodesReferencias, "href")
+
+for (i in length(links)){
+  print(i)
+contenedor_link <- print(read_html(links[[i]]))  
+}
+
+
+for (i in links){
+  print(i)
+  lecturaLibro <- read_html(i)
+  precios <- html_text(html_nodes(lecturaLibro,".price"))
+  print(precios)
+}
